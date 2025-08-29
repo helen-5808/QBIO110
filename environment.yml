@@ -1,0 +1,8 @@
+name: QBIO110
+dependencies:
+  - numpy
+  - scipy
+  - matplotlib
+  - jupyterlab
+  - spyder
+  - pandas
