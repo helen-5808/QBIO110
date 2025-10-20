@@ -7525,21 +7525,22 @@ a.anchor-link {
 <li>s = the random number seed</li>
 </ul>
 </li>
-<li>3 columns in each file:<ol>
+<li>3 columns in each file (the first and third columns are important for this question):<ol>
 <li><strong>the time step (in some non-dimensionalized units)</strong></li>
 <li>number of vertices in a graph structure description of the partial capsid</li>
 <li><strong>number of dimer subunits in the partial capsid</strong></li>
 </ol>
 </li>
 </ul>
-<p><strong>a.</strong> unix commands practice<br/>
-<strong>b.</strong> unix commands practice<br/>
+<p><strong>a.</strong> (unix commands practice) Use your knowledge of how to search within directories to identify the names of the files.<br/>
+<strong>b.</strong> (unix commands practice) Look at the beginning and end of a few files to see their format (commands <em>head</em> and <em>tail</em> will be useful). An interesting feature of HBV assembly is that the assembly is dimorphic – it assembles into two predominant sizes, with most capsids having 120 subunits, and a small fraction having 90 subunits. The infectious virions have 120 subunits.<br/>
 <strong>c.</strong></p>
 <ul>
 <li>Plot capsid size (column 3) as a function of time (column 1)</li>
-<li>choose <em>any one</em> trajectory for each of gB= −6.6,−7.0,−7.2,−7.8</li>
+<li>choose <em>any one</em> trajectory for each of gB= −6.6,−7.0,−7.2,−7.8 (you can pick an arbitrary random seed)</li>
 <li>Make a legend that labels gb for each curve.</li>
 </ul>
+<p>Note: as part of a research project, it would be illuminating to plot the average capsid size as a function of time for each binding energy, as well as some example traces, but this is outside the scope of this problem set.</p>
 </div>
 </div>
 </div>
@@ -7548,7 +7549,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -7592,7 +7593,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Text(0, 0.5, 'dimer units in partial capsid')</pre>
 </div>
@@ -7612,7 +7613,21 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="2.-SIR-Model">2. SIR Model<a class="anchor-link" href="#2.-SIR-Model">¶</a></h3><p><strong>a.</strong>  Show that if we define a dimensionless time, $\bar{t} = \gamma t$, the equations can be written in a simpler form:</p>
+<h3 id="2.-SIR-Model">2. SIR Model<a class="anchor-link" href="#2.-SIR-Model">¶</a></h3><p>Consider the basic SIR epidemiological model where $S$ = Susceptible, $I$ = Infected, $R$ = Recovered, and $S$, $I$, $R$ correspond to population densities of each of these categories. I.e., $S = X/N$, $I = Y/N$, and $R = Z/N$ where $X$, $Y$, $Z$ are respectively the numbers of susceptible, infected, and recovered individuals in the population, and $N = X + Y + Z$ is the total number of individuals in the population.</p>
+<p>As shown in the text, the basic equations for the time evolution of these population densities can be written as</p>
+<p>$$
+\frac{dS}{dt} = -\beta SI \quad\quad\quad
+\frac{dI}{dt} = \beta SI - \gamma I \quad\quad\quad
+\frac{dR}{dt} = \gamma I 
+$$</p>
+<p>for $\beta$ being the <em>transmission rate</em> and $\gamma$ being the <em>recovery rate</em>. $R_0$, the <em>reproductive ratio</em>, is equal to $\frac{\beta}{\gamma}$ represents the average number of secondary cases an average primary case produces in a totally susceptible population.</p>
+<p><strong>a.</strong>  Show that if we define a dimensionless time, $\bar{t} = \gamma t$, the equations can be written in a simpler form:
+$$
+\frac{dS}{d\bar{t}} = -R_0 SI \quad\quad
+\frac{dI}{d\bar{t}} = R_0 SI - I \quad\quad
+\frac{dR}{d\bar{t}} = I
+\\\ 
+$$</p>
 <blockquote>
 <p>The following assumes that $\frac{1}{\gamma}\cdot\frac{dF}{dt}=\frac{dF}{d(\gamma t)} = \frac{dF}{d\bar{t}}$ for functions $S$, $I$, and $R$
 $$R_0 = \frac{\beta}{\gamma}
@@ -7630,13 +7645,13 @@ $$R_0 = \frac{\beta}{\gamma}
 \frac{dR}{d(\gamma t)} = I = \frac{dR}{d\bar{t}}
 \\\ \\\ \\\
 $$
-<strong>b.</strong> Plot the time evolution of each category (on the same plot) for:</p>
+<strong>b.</strong> Plot the time evolution of each category (on the same plot) for a high reproductive ratio and a small infection pool:</p>
 </blockquote>
 <ul>
 <li>$R_0 = 10$</li>
 <li>$I(0) = 1.0\times 10^{-5}$</li>
 <li>$S(0) = 1 - I(0)$</li>
-<li>Use the simple Euler algorithm in tutorial</li>
+<li>Calculate using a basic forward Euler algorithm</li>
 </ul>
 </div>
 </div>
@@ -7646,7 +7661,7 @@ $$
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">R0_var</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># basic reproductive ratio</span>
@@ -7695,9 +7710,9 @@ $$
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>&lt;matplotlib.legend.Legend at 0x7485b886e710&gt;</pre>
+<pre>&lt;matplotlib.legend.Legend at 0x7b2ebf38a850&gt;</pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -7715,7 +7730,7 @@ $$
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>c.</strong> Explore the idea of ‘flattening the curve’</p>
+<p><strong>c.</strong> Explore the idea of ‘flattening the curve’ by reducing $R_0$ through lockdowns, social distancing, etc.</p>
 <ul>
 <li>Plot the epidemic curve for $R_0 = 2.0, 1.5, 0.9$</li>
 <li>Epidemic curve = $\frac{dR(\bar{t})}{d\bar{t}} = I$</li>
@@ -7729,7 +7744,7 @@ $$
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">flatten_curve</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -7836,7 +7851,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_approximate</span><span class="p">(</span><span class="n">R0_var</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">S_init</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">I_init</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">R_init</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">total_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -7885,7 +7900,7 @@ $$</p>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Text(0, 0.5, 'Epidemic curve')</pre>
 </div>
@@ -7905,7 +7920,21 @@ $$</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="3.-Effects-of-quarantining">3. Effects of quarantining<a class="anchor-link" href="#3.-Effects-of-quarantining">¶</a></h2><p><strong>a.</strong>  Show that if we define a dimensionless time, $\bar{t} = \gamma t$, the equations can be written in a simpler form:</p>
+<h2 id="3.-Effects-of-quarantining-(isolating)-infected-individuals">3. Effects of quarantining (isolating) infected individuals<a class="anchor-link" href="#3.-Effects-of-quarantining-(isolating)-infected-individuals">¶</a></h2><p>Now consider an additional population, $Q$ for the quarantined category. Now, the basic equations for the evolution of these population densities in time can be written as</p>
+<p>$$
+\frac{dS}{dt} = \mu -\beta SI - \mu S \quad\quad\quad\quad
+\frac{dI}{dt} = \beta SI - \left( \gamma + d_I + \mu \right) I \quad\quad\quad\quad
+\frac{dR}{dt} = \gamma I + \tau_Q^{-1}Q - \mu R \quad\quad\quad\quad
+\frac{dQ}{dt} = d_II -\tau_Q^{-1}Q
+$$</p>
+<p>with $\mu$ being the steady state birth and death rate (not accounting for death due to the epidemic), $d_I$ the rate at which infected individuals are detected and sent to quarantine, and $\tau_Q^{-1}$ being the rate at which individuals leave quarantine. As suggested in the text, we can assume that individuals leave quarantine when they are recovered, and thus take $\tau_Q^{-1} = \gamma$</p>
+<p><strong>a.</strong>  Show that if we define a dimensionless time, $\bar{t} = \gamma t$, the equations can be written in a simpler form:
+$$
+\frac{dS}{d\bar{t}} =  \bar{\mu} -\bar{\beta} SI - \bar{\mu} S \quad\quad\quad
+\frac{dI}{d\bar{t}} = \bar{\beta} SI - \left( 1 + \bar{d_I} + \bar{\mu} \right) I \quad\quad\quad
+\frac{dI}{d\bar{t}} = I + Q - \bar{\mu} R \quad\quad\quad
+\frac{dQ}{d\bar{t}} = \bar{d_I}I - Q
+$$</p>
 <blockquote>
 <p>The following assumes that $\frac{1}{\gamma}\cdot\frac{dF}{dt}=\frac{dF}{d(\gamma t)} = \frac{dF}{d\bar{t}}$ for functions $S$, $I$, $R$, and $Q$</p>
 <p>$$R_0 = \frac{\beta}{\gamma+d_I+\mu}, \quad\quad 
@@ -7952,7 +7981,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># The given rate constants in terms of 1/year</span>
@@ -8013,7 +8042,7 @@ $$</p>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Text(0, 0.5, 'Epidemic curve')</pre>
 </div>
